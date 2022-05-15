@@ -127,3 +127,9 @@ i = i + 1;
 2. `i`에 1을 더한다.
 3. 더한 결과를 다른 Integer object로 box한다.
 4. 결과값 Integer object를 `i`에 할당한다.
+
+---
+#### [공부출처]
+* [Autoboxing and Unboxing (The Java™ Tutorials > Learning the Java Language > Numbers and Strings)](https://docs.oracle.com/javase/tutorial/java/data/autoboxing.html)
+* [Autoboxing and Unboxing in Java - GeeksforGeeks](https://www.geeksforgeeks.org/autoboxing-unboxing-java/)
+* [Wrapper Classes in Java - GeeksforGeeks](https://www.geeksforgeeks.org/wrapper-classes-java/)

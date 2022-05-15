@@ -52,3 +52,7 @@ int arr[] = new int[5];
 
 5. `클래스를 인스턴스화한다는것` 라는 의미는 `객체를 생성하는 것`과 같은 의미다. 그리고 객체를 생성할 때, 당신은 클래스의 인스턴스를 생성하는 것이고, 그러므로 클래스를 인스턴스화한다 라고 하는것이다.
 
+
+---
+#### [공부출처]
+* [new operator in Java - GeeksforGeeks](https://www.geeksforgeeks.org/new-operator-java/)
