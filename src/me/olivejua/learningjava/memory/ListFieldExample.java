@@ -21,7 +21,6 @@ public class ListFieldExample {
     }
 
     public static void main(String[] args) {
-        Math
 //        List<String> elements = Arrays.asList("A", "B", "C", "D", "E", "F");
 //        new ArrayList<>();
 //
