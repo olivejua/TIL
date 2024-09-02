@@ -37,10 +37,7 @@
 
 ## Tomcat의 구조
 
-![[./attachments/스크린샷 2024-09-02 오후 4.20.48.png]]
-
-
-
+![](./attachments/tomcat_architecture.png)
 
 ### (1) Server
 > Tomcat의 최상위 구성요소로, 전체 서버를 나타낸다. 하나의 Tomcat 인스턴스에는 하나의 Server 객체가 있으며, 이 Server는 여러 **Service** 객체를 포함할 수 있다.
