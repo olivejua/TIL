@@ -46,27 +46,67 @@
 ### (2) Service
 > Server 내 중간 구성요소로, 하나 이상의 **Connector**를 하나의 **Engine**에 연결한다. Service는 클라리언트로부터 요청을 받고 이를 처리할 적절한 엔진으로 전달하는 역할을 한다. 각 Service는 여러 Connector를 가질 수 있지만, 단 하나의 Engine과 연결된다.
 
-> [!todo] 여러개의 Service 중에 어떤 식으로 특정 Service가 선택되는지 알아보기
+> [!info] Service가 여러개로 나누어지는 경우
+> - 독립적인 구성 필요 
+> 	- 만약 프로토콜이나 포트가 다른 보안설정, 로깅설정, 또는 다른 네트워크 설정을 필요로 하는 경우
+> 	- 단일 Tomcat 인스턴스에서 여러 애플리케이션 환경을 분리하여 사용해야할 때도 여러개의 service를 사용할 수 있다. 예를 들어 하나의 서비스를 개발환경으로하고 하나의 서비스를 운영환경으로 하고 싶다면 분리할 수 있다.
+> - 다른 엔진 설정: 만약 각 Service가 다른 엔진 설정을 필요로 하는 경우 (예: 서로 다른 웹 애플리케이션을 완전히 독립적으로 구동해야하는 경우)
+
+> [!info] Tomcat에 요청이 들어왔을 경우 Connector 연결과정
+> 1. 클라이언트가 HTTP 요청을 보내면, Tomcat 서버는 모든 Connector는 자신이 리스닝하고 있는 포트를 통해 들어오는 요청을 수신한다. 
+> 2. 각 Connector는 자신이 처리할 수 있는 요청의 종류(프로토콜)과 포트를 정의하고 있다. 예를 들어, 하나의 Service에 HTTP와 HTTPS Connector가 모두 설정되어있는 경우, 각 Connector는 자신이 처리할 수 있는 프로토콜과 포트에 맞는 요청만 수신한다.
+> 3. Connector가 포함되어 있는 Service의 Engine으로 요청 전달한다.
+
 ### (3) Connector
 > 클라이언트와의 통신을 처리하는 구성요소이다.
-> - HTTP Connector: HTTP or HTTPS 프로토콜을 통해 들어오는 요청을 수신하며, 주로 Tomcat이 독립적으로 웹 애플리케이션을 제공할 때 사용된다.
-> - AJP Connector: Apache HTTP Server와 같은 다른 웹 서버와의 통합을 위해 사용된다. Apache HTTP Server에서 들어오는 요청을 AJP 프로토콜을 통해 Tomcat으로 전달할 수 있다.
+> - **HTTP Connector**: HTTP or HTTPS 프로토콜을 통해 들어오는 요청을 수신하며, 주로 Tomcat이 독립적으로 웹 애플리케이션을 제공할 때 사용된다.
+> - **AJP Connector**: Apache HTTP Server와 같은 다른 웹 서버와의 통합을 위해 사용된다. Apache HTTP Server에서 들어오는 요청을 AJP 프로토콜을 통해 Tomcat으로 전달할 수 있다.
+
+> [!note] 
+> Tomcat 내 Service가 여러 개로 나누어져 있고, 독립적으로 거성이 가능하지만 port와 protocol은 중복없이 유니크해야한다. 
 
 ### (4) Engine
 > Tomcat의 요청 처리 파이프라인을 담당하는 구성요소로, Service 내에 존재한다. 
 > Engine은 여러 **Host**를 포함할 수 있으며, 각 요청을 적절한 Host로 전달하고, 요청을 처리한 후 응답을 다시 Connector로 보낸다.
 
-> [!todo] 여러개의 호스트중에 어떤 식으로 선택되는지 알아보기
+> [!tip] 여러개의 호스트중에 어떤 식으로 선택되는지
+> Tomcat은 Host 헤더가 일치하는 Host로 요청을 전달한다. 
+> > [!example]
+> > ```xml
+> > `<Engine name="Catalina" defaultHost="www.example.com">
+> > 	`<Host name="www.example.com" appBase"webapps1">
+> > 		`<Context path="" docBase="ROOT" reloadable="true" />
+> > 		`<Context path="/shop" docBase="shop" reloadable="true" />
+> > 	`</Host>
+> > `</Engine>
+> > ```
+> > `http://www.example.com/shop`로 요청이 오면 `www.example.com`을 가진 Host로 요청을 전달한다. 그리고 요청의 URL 경로가 `/shop`이므로, `/shop`으로 매핑된 Context에서 처리된다.
+
+> [!tip] 여러 호스트를 하나의 IP에서 처리하는 이유
+> 같은 브랜드에서 여러 서비스를 나누고 싶을 수도 있다. 예를 들어 `exmaple`이라는 브랜드라면 `shop.example.com`, `support.example.com`, `blog.example.com`이라는 서비스를 나누어놓고, 같은 서버자원을 사용하여 비용을 절감하고 싶다면 사용할 수 있을 것 같다. 
 
 ### (5) Host
 > 특정 도메인 네임(EX: `www.example.com`)과 연관된 가상 호스트를 나타내며, 하나의 Engine 내에서 여러 Host를 정의할 수 있다. 각 Host는 하나이상의 **Context**를 포함할 수 있다.
 
-> [!todo] 
-> - [ ] 가상 호스트가 어떤 모양새로 되어있는지 확인하기
-> - [ ] Context가 하나 이상이면 어떤식으로 선택되는지 알아보기
+> [!question] 요청기반으로 분기처리되는 것 같은데 왜 Connector가 아닌 Engine에 포함될까? 
+> 우선 Connector는 네트워크 계층에서 작업을 처리한다. 
+> Engine은 하나의 Service 내에서 요청의 라우팅을 관리하는 역할을 한다. Connector가 요청을 Service에 전달하면, Engine은 도메인 이름 기반의 호스팅 설정을 통해 적절한 Host를 선택하고, 각 Host의 Context 설정에 따라 Context 설정에 따라 최종적으로 요청을 라우팅한다. 
+> 즉, 요청을 프로토콜과 포트에 따라 리스닝하고 있는 역할을 Connector가 하고, 받아서 전달할 때 어느 애플리케이션에 라우팅할지 선택하는 건 Engine이 한다. 그렇게 함으로써 웹서버가 여러 도메인을 손쉽게 관리할 수 있다.
+
 ### (6) Context
 > 특정 웹 애플리케이션을 나타내는 구성요소이다. 각 Host는 여러 Context를 가질 수 있으며, Context는 웹 애플리케이션의 루트와 경로를 정의한다.
 > Context는 서블릿, JSP, 정적파일, 웹 애플리케이션 설정 등을 포함하며, 각 애플리케이션이 독립적으로 동작하도록 관리한다.
+
+```xml ```
+
+> [!info] 주요설정 요소
+> > [!example]
+> > ```xml 
+> > `<Context path="/shop" docBase="shop" reloadable="true">
+> > ```
+> - path: Context가 제공하는 웹 애플리케이션 URL 경로 정의. 따라서 예에서 설정으로 보았을때 `/shop` 경로로 들어오는 모든 요청을 처리하는 애플리케이션을 의미한다.
+> - docBase: 웹 애플리케이션의 실제 위치를 지정한다. 이는 애플리케이션의 루트 디렉토리를 가리키며 docBase가 설정된 디렉토리 내의 모든 파일이 해당 웹 애플리케이션의 일부로 간주된다.
+> - reloadable: 속성이 `true`로 설정된 경우, Tomcat 애플리케이션의 클래스 팡리이나 리소스 파일의 변경을 감지하고 자동으로 애플리케이션을 다시 로드할 수 있다.
 
 ### (7) Servlet Container (Catalina)
 > Tomcat의 핵심 부분으로, Java 서블릿과 JSP를 실행하고 관리하는 역할을 한다. Catalina는 서블릿 스펙을 구현하며, 모든 HTTP 요청을 서블릿으로 매핑하여 처리한다.
@@ -74,6 +114,15 @@
 
 
 
+
+
+
+
+
+
+
+
+---
 
 > [!note] 참고링크
 > - https://tomcat.apache.org/tomcat-9.0-doc/architecture/overview.html
