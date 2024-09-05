@@ -1,7 +1,6 @@
 
 > [!question]
 > - [x] tomcat의 구조
-> - [ ] Tomcat이 Java Servlet과 JSP를 관리한다는데 요즘은 JSP를 사용하지 않는데 이것까지 관리되는건가?
 > - [x] apache와 tomcat의 관계
 > - [ ] Spring Boot는 통합된 것일까, Tomcat 서버만 내장한 걸까? 그리고 이유는 뭐지?
 
