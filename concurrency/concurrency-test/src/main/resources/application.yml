@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: concurrency-test
+  datasource:
+    url: jdbc:mysql://localhost:3308/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
