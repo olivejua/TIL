@@ -1,6 +1,5 @@
 package dev.oliveua.concurrencytest.v2;
 
-import dev.oliveua.concurrencytest.v3.V3ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Slf4j
-@RequestMapping("/v3")
+@RequestMapping("/v2")
 @RequiredArgsConstructor
 @RestController
 public class V2ProductController {

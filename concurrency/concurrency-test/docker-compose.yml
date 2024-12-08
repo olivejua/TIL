@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  app:
+  mysql:
     image: olivejua/ex_store:1.0
     ports:
       - "3308:3306"
@@ -11,3 +11,7 @@ services:
       - MYSQL_PASSWORD=${DB_PASSWORD}
     env_file:
       - .env
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"

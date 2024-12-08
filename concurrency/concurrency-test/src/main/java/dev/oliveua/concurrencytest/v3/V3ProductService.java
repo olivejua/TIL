@@ -5,10 +5,17 @@ import dev.oliveua.concurrencytest.persistence.ProductEntity;
 import dev.oliveua.concurrencytest.persistence.ProductJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 @Slf4j
@@ -16,9 +23,27 @@ import java.util.concurrent.locks.ReentrantLock;
 @Service
 public class V3ProductService {
     private final ProductJpaRepository productJpaRepository;
+    private final RedissonClient redissonClient;
 
     public void purchaseProductWithRedisLock(Long productId, int quantity, int index) {
+        RLock lock = redissonClient.getLock("PRODUCT_" + productId);
 
+        try {
+            if (lock.tryLock(500, 3000, TimeUnit.MILLISECONDS)) {
+                try {
+                    log.info("({}번째) Lock 획득 성공!", index);
+                    purchaseProduct(productId, quantity, index);
+                } finally {
+                    lock.unlock();
+                }
+            } else {
+                log.error("Redis Lock 획득 실패!");
+                throw new RuntimeException("Redis Lock 획득 실패!");
+            }
+        } catch (InterruptedException e) {
+            log.error("Redis Lock 획득 실패! Interrupted while acquiring lock");
+            throw new RuntimeException("Interrupted while acquiring lock", e);
+        }
     }
 
     private void purchaseProduct(Long productId, int quantity, int index) {

@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Slf4j
-@RequestMapping("/v2")
+@RequestMapping("/v3")
 @RequiredArgsConstructor
 @RestController
 public class V3ProductController {
