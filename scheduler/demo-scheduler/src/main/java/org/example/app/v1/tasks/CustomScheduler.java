@@ -1,4 +1,4 @@
-package org.example.app.tasks;
+package org.example.app.v1.tasks;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
