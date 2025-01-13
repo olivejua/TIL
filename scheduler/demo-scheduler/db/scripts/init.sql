@@ -6,7 +6,9 @@ use testdb;
 create table tasks (
     id bigint auto_increment primary key,
     name varchar(100) not null,
-    created_at timestamp not null default current_timestamp
+    status varchar(30) not null default 'PENDING', -- PENDING, PROCESSING, DONE
+    created_at timestamp not null default current_timestamp,
+    updated_at timestamp not null default current_timestamp
 );
 
 INSERT INTO tasks (name) VALUES

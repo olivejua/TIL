@@ -1,10 +1,12 @@
 package org.example.app.v1.tasks;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.app.IScheduler;
+import org.example.app.config.IScheduler;
 import org.springframework.scheduling.annotation.Scheduled;
 
-// 스레드 실행 테스트
+/**
+ * 스레드 실행 테스트
+ */
 @Slf4j
 public class V1Scheduler implements IScheduler {
 
