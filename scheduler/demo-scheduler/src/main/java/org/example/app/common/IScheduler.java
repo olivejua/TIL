@@ -1,4 +1,4 @@
-package org.example.app.config;
+package org.example.app.common;
 
 public interface IScheduler {
 }

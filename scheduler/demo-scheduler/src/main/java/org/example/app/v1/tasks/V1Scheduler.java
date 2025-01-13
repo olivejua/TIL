@@ -1,7 +1,7 @@
 package org.example.app.v1.tasks;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.app.config.IScheduler;
+import org.example.app.common.IScheduler;
 import org.springframework.scheduling.annotation.Scheduled;
 
 /**
