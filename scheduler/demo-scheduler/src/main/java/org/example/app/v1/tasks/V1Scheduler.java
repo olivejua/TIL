@@ -2,13 +2,10 @@ package org.example.app.v1.tasks;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
-import java.time.LocalTime;
-
+// 스레드 실행 테스트
 @Slf4j
-@Component
-public class CustomScheduler {
+public class V1Scheduler {
 
     // 매 1초마다 실행
     @Scheduled(fixedRate = 1000)
