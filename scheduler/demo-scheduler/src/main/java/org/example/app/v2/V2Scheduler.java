@@ -3,7 +3,6 @@ package org.example.app.v2;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.example.app.common.IScheduler;
-import org.example.app.common.TaskService;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.Arrays;
@@ -14,9 +13,9 @@ import java.util.List;
  */
 @Slf4j
 public class V2Scheduler implements IScheduler {
-    private final TaskService taskService;
+    private final V2TaskService taskService;
 
-    public V2Scheduler(TaskService taskService) {
+    public V2Scheduler(V2TaskService taskService) {
         this.taskService = taskService;
     }
 

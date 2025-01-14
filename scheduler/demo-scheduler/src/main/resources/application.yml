@@ -4,3 +4,7 @@ spring:
     username: root
     password: testpw
     driver-class-name: com.mysql.cj.jdbc.Driver
+#logging:
+#  level:
+#    org.springframework.transaction: DEBUG
+#    org.hibernate.engine.transaction: DEBUG
