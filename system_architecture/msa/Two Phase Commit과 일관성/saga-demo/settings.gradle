@@ -6,4 +6,5 @@ rootProject.name = "saga-demo"
 
 include ':order'
 include ':product'
+include ':payment'
 
