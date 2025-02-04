@@ -4,4 +4,6 @@ plugins {
 
 rootProject.name = "saga-demo"
 
-include(':order')
+include ':order'
+include ':product'
+
