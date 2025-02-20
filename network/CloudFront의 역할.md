@@ -32,3 +32,9 @@ AWS는 각국의 엣지로케이션을 위치해두고 있다. ([AWS Cloud Front
 
 하지만 이 반대상황인 경우 효과를 본다. 글로벌 사용자 대상이거나 자주 요청이 되는 경우 Cloud Front를 사용할 이유가 충분하자. 이 경우 Cloud Front 사용을 고려하자. 
 
+
+
+---
+#### 참고 
+- https://docs.aws.amazon.com/ko_kr/AmazonCloudFront/latest/DeveloperGuide/Introduction.html
+- https://aws.amazon.com/ko/cloudfront/features/?whats-new-cloudfront.sort-by=item.additionalFields.postDateTime&whats-new-cloudfront.sort-order=desc#Global_Edge_Network
