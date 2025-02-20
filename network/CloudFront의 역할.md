@@ -14,7 +14,7 @@ AWS는 각국의 엣지로케이션을 위치해두고 있다. ([AWS Cloud Front
 4. 서울 엣지로케이션에 캐싱하고 사용자에게 응답
 
 <img src="https://docs.aws.amazon.com/ko_kr/AmazonCloudFront/latest/DeveloperGuide/images/how-you-configure-cf.png" alt="AWS Cloud Front 이미지"/>
-*(출처: Amazon CloudFront란?)*
+*(출처: Amazon CloudFront란?)*  
 
 
 여기서 또하나 `Regional Edge Cache` 라는 개념도 있는데 중앙 캐싱 계층이라고 한다. 
